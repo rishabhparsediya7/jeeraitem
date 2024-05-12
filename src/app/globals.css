@@ -17,17 +17,35 @@
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
+  /* color: black; */
+  background: white;
+  /* background: linear-gradient(
       to bottom,
       transparent,
       rgb(var(--background-end-rgb))
     )
-    rgb(var(--background-start-rgb));
+    rgb(var(--background-start-rgb)); */
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+  .drag-and-drop {
+    display: flex;
+    justify-items: center;
+    flex-direction: column;
+    row-gap: 4px;
+    padding: 10px;
+    /* border: 1px solid gray; */
+    border-radius: 10px;
+  }
+  .draggable-item {
+    background: white;
+    color: black;
+    border-radius: 10px;
+    padding: 14px;
+    display: flex;
+    justify-items: center;
   }
 }
