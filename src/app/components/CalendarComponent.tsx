@@ -24,13 +24,13 @@ export default function CalendarWeek() {
             <table className="table-fixed w-full">
                 <thead className="">
                     <tr className="">
-                        {weeks.map((day) => (<th className="capitalize text-[10px] text-gray-500 font-bold">{day}</th>))}
+                        {weeks.map((day) => (<th key={day} className="capitalize text-[10px] text-gray-500 font-bold">{day}</th>))}
                     </tr>
                 </thead>
                 <tbody>
                     <tr className="">
                         {days.map((day) => (
-                            <td className={`text-[10px] cursor-pointer text-center font-bold ${date.getDate() === day.getDate() ? `bg-[#f14e6b] rounded-full text-white p-2` : ``}`}>{day.getDate()}</td>
+                            <td key={day.getDate()} className={`text-[10px] cursor-pointer text-center font-bold ${date.getDate() === day.getDate() ? `bg-[#f14e6b] rounded-full text-white p-2` : ``}`}>{day.getDate()}</td>
                         ))}
                     </tr>
                 </tbody>

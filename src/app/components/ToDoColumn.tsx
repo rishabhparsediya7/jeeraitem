@@ -1,13 +1,17 @@
 import { MessageCircle } from "lucide-react";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../GlobalRedux/store";
 
 type TicketType = {
+    id: number
     heading: string
     content: string
 }
 
-export default function ToDOColumn({ tickets }: { tickets: TicketType[] }) {
+export default function ToDOColumn() {
+    const tickets = useSelector((state: RootState) => state.ticket.tickets);
     const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
         e.dataTransfer.setData('text/plain', e.currentTarget.id);
         e.dataTransfer.effectAllowed = 'move';
@@ -29,7 +33,7 @@ export default function ToDOColumn({ tickets }: { tickets: TicketType[] }) {
             <h1>Todos</h1>
             {
                 tickets.map((ticket: TicketType) => (
-                    <div className="draggable-item flex flex-col space-y-2" id={ticket.heading.toString().split(' ').join('_')} draggable onDragStart={handleDragStart}>
+                    <div key={ticket.id} className="draggable-item flex flex-col space-y-2" id={ticket.heading.toString().split(' ').join('_')} draggable onDragStart={handleDragStart}>
                         <div className="bg-pink-200 text-red-500 rounded-3xl px-2 py-1 w-fit text-[10px] font-bold tracking-wide">UI Design</div>
                         <div className="rounded-lg capitalize text-[14px] font-bold">{ticket.heading}</div>
                         <div className="flex">

@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
-import { Inter, Nunito } from "next/font/google";
+import { Nunito } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/Navbar";
+import { Providers } from "./GlobalRedux/Provider";
 
 const nunito = Nunito({ subsets: ["latin"] });
 
@@ -18,8 +19,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={nunito.className}>
-        <Navbar />
-        {children}</body>
+        <Providers>
+          <Navbar />
+          {children}
+        </Providers>
+      </body>
     </html>
   );
 }

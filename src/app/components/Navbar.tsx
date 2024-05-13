@@ -11,7 +11,7 @@ export default function Navbar() {
                     height={500}
                     width={500}
                 />
-                Oonth k muh mai Jeera Board
+                <span className="mx-3 text-[20px] font-bold uppercase">Jeera Board</span>
             </div>
             <div className="flex items-center">
                 <ul className="flex items-center space-x-6">
