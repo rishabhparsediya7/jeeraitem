@@ -1,11 +1,8 @@
+'use client'
 import { addTicket } from "@/app/GlobalRedux/feature/TicketSlice";
 import { Plus } from "lucide-react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-type TicketType = {
-    heading: string
-    content: string
-}
 
 export default function Modal({ toggleModal }: { toggleModal: () => void }) {
     const [heading, setHeading] = useState<string>('');
