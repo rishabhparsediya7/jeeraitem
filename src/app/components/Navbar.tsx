@@ -24,7 +24,7 @@ export default function Navbar({ name, image }: { name: string | undefined | nul
                         <Bell />
                     </Link>
                     <li>
-                        <Image className="h-10 w-10 rounded-full" src={`${image ? image : `/user.jpg`}`} alt="default_user" height={500} width={500} />
+                        <Image className="h-10 w-10 rounded-full" src={`/user.jpg`} alt="default_user" height={500} width={500} />
                     </li>
                 </ul>
             </div>

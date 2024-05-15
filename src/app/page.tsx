@@ -7,7 +7,7 @@ import { getServerSession } from 'next-auth';
 import { options } from './api/auth/[...nextauth]/options';
 import Navbar from './components/Navbar';
 
-export async function Home() {
+export default async function Home() {
   const session = await getServerSession(options)
 
   return (
@@ -22,5 +22,3 @@ export async function Home() {
     </div>
   );
 };
-
-export default Home;
