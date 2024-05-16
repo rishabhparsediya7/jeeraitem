@@ -1,35 +1,29 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface Ticket {
-  id: number;
-  heading: string;
-  content: string;
+  count: number;
 }
 
 interface TicketState {
-  tickets: Ticket[];
+  count: number;
 }
 
 const initialState: TicketState = {
-  tickets: [],
+  count: 0,
 };
 
 export const TicketSlice = createSlice({
   name: "ticket",
   initialState,
   reducers: {
-    addTicket: (
-      state,
-      action: PayloadAction<{ heading: string; content: string }>
-    ) => {
-      state.tickets.push({
-        id: state.tickets.length,
-        heading: action.payload.heading,
-        content: action.payload.content,
-      });
+    addTicket: (state) => {
+      state.count += 1;
+    },
+    removeTicket: (state) => {
+      state.count -= 1;
     },
   },
 });
 
 export default TicketSlice.reducer;
-export const { addTicket } = TicketSlice.actions;
+export const { addTicket, removeTicket } = TicketSlice.actions;
