@@ -21,10 +21,10 @@ export default function Navbar({ name, image }: { name: string | undefined | nul
                 </div>
                 <div className="hidden sm:flex items-center">
                     <ul className="flex items-center space-x-2">
-                        <Link href="/home" className="hover:bg-[#f14e6b] tracking-wide hover:text-white rounded-md p-2">Home</Link>
-                        <Link href="/profile" className="hover:bg-[#f14e6b] tracking-wide hover:text-white rounded-md p-2">Profile</Link>
+                        <Link href="/" className="hover:bg-[#f14e6b] tracking-wide hover:text-white rounded-md p-2">Home</Link>
+                        <Link href="/" className="hover:bg-[#f14e6b] tracking-wide hover:text-white rounded-md p-2">Profile</Link>
                         {name && <Link href="/api/auth/signout" className="hover:bg-[#f14e6b] tracking-wide hover:text-white rounded-md p-2">Signout</Link>}
-                        <Link href="/notification" className="hover:bg-[#f14e6b] tracking-wide hover:text-white rounded-md p-2">
+                        <Link href="/" className="hover:bg-[#f14e6b] tracking-wide hover:text-white rounded-md p-2">
                             <Bell />
                         </Link>
                         <li>Hi, <span className="capitalize">{name?.toString().split(" ")[0]}</span></li>
