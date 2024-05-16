@@ -36,19 +36,24 @@ export async function POST(req: NextRequest) {
 }
 
 export async function GET(req: NextRequest) {
-  const { searchParams } = new URL(req.url);
-  const email = searchParams.get("email");
-  const client = await clientPromise;
-  const db = client.db("test");
-  const result = await db
-    .collection("jeera")
-    .find({ email: email }, { projection: { _id: 0, tickets: 1 } })
-    .toArray();
-  if (result[0].tickets === undefined) return NextResponse.json([]);
-  const tickets = result[0].tickets;
-  if (tickets.length === 0) return NextResponse.json([]);
-  const grouped = groupByTag(tickets);
-  return NextResponse.json(grouped);
+  try {
+    const { searchParams } = new URL(req.url);
+    const email = searchParams.get("email");
+    const client = await clientPromise;
+    const db = client.db("test");
+    const result = await db
+      .collection("jeera")
+      .find({ email: email }, { projection: { _id: 0, tickets: 1 } })
+      .toArray();
+    if (result[0].tickets === undefined) return NextResponse.json([]);
+    const tickets = result[0].tickets;
+    if (tickets.length === 0) return NextResponse.json([]);
+    const grouped = groupByTag(tickets);
+    return NextResponse.json(grouped);
+  } catch (error) {
+    console.log("error connecting to the database");
+    return NextResponse.json({ sucess: false });
+  }
 }
 
 export async function PUT(req: NextRequest) {

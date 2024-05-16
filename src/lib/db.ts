@@ -1,4 +1,4 @@
-import { MongoClient } from "mongodb";
+import { MongoClient, MongoServerSelectionError } from "mongodb";
 
 if (!process.env.MONGO_URI) {
   throw new Error("Please add your Mongo URI to .env.local");
@@ -9,7 +9,6 @@ let client: MongoClient;
 let clientPromise: Promise<MongoClient>;
 
 if (process.env.NODE_ENV === "development") {
-
   let globalWithMongoClientPromise = global as typeof globalThis & {
     _mongoClientPromise: Promise<MongoClient>;
   };
