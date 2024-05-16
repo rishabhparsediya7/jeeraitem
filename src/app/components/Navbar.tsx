@@ -1,5 +1,6 @@
 'use client'
 import { Bell, Ham, HamIcon, LucideAlignJustify } from "lucide-react";
+import { signOut } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -23,7 +24,7 @@ export default function Navbar({ name, image }: { name: string | undefined | nul
                     <ul className="flex items-center space-x-2">
                         <Link href="/" className="hover:bg-[#f14e6b] tracking-wide hover:text-white rounded-md p-2">Home</Link>
                         <Link href="/" className="hover:bg-[#f14e6b] tracking-wide hover:text-white rounded-md p-2">Profile</Link>
-                        {name && <Link href="/api/auth/signout" className="hover:bg-[#f14e6b] tracking-wide hover:text-white rounded-md p-2">Signout</Link>}
+                        {name && <button onClick={() => signOut()} className="hover:bg-[#f14e6b] tracking-wide hover:text-white rounded-md p-2">Signout</button>}
                         <Link href="/" className="hover:bg-[#f14e6b] tracking-wide hover:text-white rounded-md p-2">
                             <Bell />
                         </Link>

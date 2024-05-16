@@ -31,8 +31,8 @@ export default function Modal({ toggleModal, email }: { toggleModal: () => void,
         toggleModal();
     }
     return (
-        <div className="w-[100vw] h-[100vh] bg-black/20 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 ">
-            <div className='w-full slide-in-right rounded-xl flex max-w-3xl flex-col space-y-2 bg-white modal-shadow  absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 '>
+        <div className="w-[100vw] h-[100vh] bg-black/20 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
+            <div className='w-full slide-in-right rounded-xl flex max-w-3xl flex-col space-y-2 bg-white modal-shadow  absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2'>
                 <div className="flex justify-end p-4">
                     <Plus size={30} className="transform rotate-45 hover:bg-black/20 p-1 hover:cursor-pointer rounded-full" onClick={() => toggleModal()} />
                 </div>
