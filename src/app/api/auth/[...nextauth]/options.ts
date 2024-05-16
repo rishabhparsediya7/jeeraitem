@@ -1,10 +1,8 @@
 import type { NextAuthOptions } from "next-auth";
-import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { session } from "@/lib/session";
 import clientPromise from "@/lib/db";
-import { userAgent } from "next/server";
 export const options: NextAuthOptions = {
   session: {
     strategy: "jwt",

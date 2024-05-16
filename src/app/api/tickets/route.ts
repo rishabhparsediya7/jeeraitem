@@ -1,12 +1,6 @@
 import clientPromise from "@/lib/db";
-import { filterWithoutId, findById, groupByTag } from "@/lib/groupBy";
+import { filterWithoutId, groupByTag } from "@/lib/groupBy";
 import { NextRequest, NextResponse } from "next/server";
-type TicketType = {
-  ticketId: string;
-  heading: string;
-  content: string;
-  tag: string;
-};
 
 export async function POST(req: NextRequest) {
   const { email, heading, content, tag } = await req.json();
