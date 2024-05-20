@@ -51,8 +51,6 @@ export async function GET(req: NextRequest) {
     const grouped = groupByTag(tickets);
     return NextResponse.json(grouped);
   } catch (error) {
-    console.log("error connecting to the database");
-    return NextResponse.json({ sucess: false });
   }
 }
 
