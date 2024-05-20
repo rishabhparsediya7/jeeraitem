@@ -11,13 +11,6 @@ export default function Navbar({ name, image }: { name: string | undefined | nul
         <nav className="w-full flex flex-col items-center bg-white ">
             <div className="flex justify-between w-full p-4 shadow-lg">
                 <div className="text-[16px] flex items-center">
-                    {/* <Image
-                        className="h-12 w-20 rounded-3xl"
-                        src="/camel.jpg"
-                        alt="camel"
-                        height={500}
-                        width={500}
-                    /> */}
                     <img className="h-12 w-20 rounded-3xl" src="/camel.jpg" alt="" />
                     <span className="mx-3 text-[20px] font-bold uppercase">Jeera Board</span>
                 </div>
@@ -48,7 +41,7 @@ export default function Navbar({ name, image }: { name: string | undefined | nul
                         <Bell />
                     </Link>
                     <li className="p-2 flex items-center justify-start space-x-4">Hi, <span className="capitalize">{name?.toString().split(" ")[0]}</span>
-                        <Image className="h-10 w-10 rounded-full" src={image ? image : `/user.jpg`} alt="default_user" height={500} width={500} />
+                        <img className="h-10 w-10 rounded-full" src={image ? image : `/user.jpg`} alt="default_user" height={500} width={500} />
                     </li>
                 </ul>
             </div>}

@@ -1,7 +1,6 @@
 'use client'
 
 import { Plus } from "lucide-react"
-import Image from "next/image"
 
 export default function InfoModal({ toggleModal }: { toggleModal: () => void }) {
     return (
@@ -10,7 +9,7 @@ export default function InfoModal({ toggleModal }: { toggleModal: () => void }) 
                 <div className="w-full flex justify-end">
                     <Plus size={30} className="transform rotate-45 hover:bg-black/20 p-1 hover:cursor-pointer rounded-full" onClick={() => toggleModal()} />
                 </div>
-                <Image className="rounded-xl" src="/bob-the-builder.gif" alt="bob" height={500} width={500} />
+                <img className="rounded-xl" src="/bob-the-builder.gif" alt="bob" />
                 <button onClick={() => toggleModal()} className="bg-[#f14e6b] w-full rounded-xl p-2 text-white font-bold tracking-wider">Yes, You can!</button>
             </div>
         </div>
