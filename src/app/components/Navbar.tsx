@@ -31,7 +31,7 @@ export default function Navbar({ name, image }: { name: string | undefined | nul
                         </Link>
                         <li>Hi, <span className="capitalize">{name?.toString().split(" ")[0]}</span></li>
                         <li>
-                            <Image className="h-10 w-10 rounded-full" src={image ? image : `/user.jpg`} alt="default_user" height={500} width={500} />
+                            <img className="h-10 w-10 rounded-full" src={image ? image : `/user.jpg`} alt="default_user" />
                         </li>
                     </ul>
                 </div>

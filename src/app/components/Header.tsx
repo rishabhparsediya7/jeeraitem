@@ -30,6 +30,7 @@ export default function Header({ email, name }: { email: string | undefined | nu
     const toggleInfoModal = () => {
         setShowInfoModal(!showInfoModal)
     }
+    const imagesArray = ['/avatar1.jpg', '/avatar2.jpg', '/avatar2.jpg', '/avatar3.jpg', '/avatar3.jpg']
     return (
         <div className="grid grid-cols-1 sm:grid-cols-3 w-full gap-6 p-4">
             {showModal && <Modal email={email} toggleModal={toggleModal} />}
@@ -40,11 +41,11 @@ export default function Header({ email, name }: { email: string | undefined | nu
                     <h3 className="text-[20px] font-semibold capitalize">{name}</h3>
                 </div>
                 <div className="flex">
-                    <Image src="/avatar1.jpg" className="h-8 w-8 rounded-full border border-gray-400" alt="avatar" height={400} width={400} />
-                    <Image src="/avatar2.jpg" className="h-8 w-8 -ml-2 rounded-full border border-gray-400" alt="avatar" height={400} width={400} />
-                    <Image src="/avatar3.jpg" className="h-8 w-8 -ml-2 rounded-full border border-gray-400" alt="avatar" height={400} width={400} />
-                    <Image src="/avatar2.jpg" className="h-8 w-8 -ml-2 rounded-full border border-gray-400" alt="avatar" height={400} width={400} />
-                    <Image src="/avatar3.jpg" className="h-8 w-8 -ml-2 rounded-full border border-gray-400" alt="avatar" height={400} width={400} />
+                    {
+                        imagesArray.map((images, index) => (
+                            <img key={index} src={images} className={`h-8 w-8 ${index === 0 ? `` : `-ml-2`} rounded-full border border-gray-400`} alt="imgs" />
+                        ))
+                    }
                 </div>
             </div>
             <div className="bg-[#eefbf5] flex flex-col rounded-xl p-3 space-y-4">

@@ -20,6 +20,7 @@ export const TicketCard = ({ ticket, handleDragStart, email }: TicketCardProps) 
     const toggleDeleteModal = () => {
         setShowDeleteModal(!showDeleteModal);
     }
+    const imagesArray = ["/avatar1.jpg", "/avatar2.jpg", "/avatar3.jpg"]
     return (
         <div className="draggable-item shadow-lg flex flex-col space-y-2" id={ticket.ticketId.toString()} draggable onDragStart={handleDragStart}>
             {showModal && <EditModal email={email} toggleModal={toggleModal} ticket={ticket} />}
@@ -41,9 +42,11 @@ export const TicketCard = ({ ticket, handleDragStart, email }: TicketCardProps) 
             </div>
             <div className="rounded-lg capitalize text-[14px] font-bold">{ticket.heading}</div>
             <div className="flex">
-                <Image src="/avatar1.jpg" className="h-8 w-8 rounded-full border border-gray-400" alt="avatar" height={400} width={400} />
-                <Image src="/avatar2.jpg" className="h-8 w-8 -ml-2 rounded-full border border-gray-400" alt="avatar" height={400} width={400} />
-                <Image src="/avatar3.jpg" className="h-8 w-8 -ml-2 rounded-full border border-gray-400" alt="avatar" height={400} width={400} />
+                {
+                    imagesArray.map((image, index) => (
+                        <img key={index} src={image} className={`h-8 w-8 ${index === 0 ? `` : `-ml-2`} rounded-full border border-gray-400`} alt="" />
+                    ))
+                }
             </div>
             <div>
                 <p className="text-[12px]">
