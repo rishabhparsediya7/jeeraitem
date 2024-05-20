@@ -10,6 +10,7 @@ import { Loader } from "./Loader";
 export default function InProgressColumn({ email }: { email: string | undefined | null }) {
     const count = useSelector((state: RootState) => state.ticket.count)
     const [inProgressTickets, setInProgresstickets] = useState([])
+    const [loading, setLoading] = useState(false);
     const dispatch = useDispatch();
     const updateTicket = async (itemId: string) => {
         const result = await fetch(`api/tickets/findById?email=${email}&ticketId=${itemId}`)
@@ -32,8 +33,10 @@ export default function InProgressColumn({ email }: { email: string | undefined 
     const fetchTickets = async () => {
         const response = await fetch(`/api/tickets?email=${email}`);
         const data = await response.json();
-        if (data.inprogress !== undefined)
+        if (data.inprogress !== undefined) {
             setInProgresstickets(data?.inprogress);
+        }
+        setLoading(false)
     }
     const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
         e.preventDefault();
@@ -54,18 +57,18 @@ export default function InProgressColumn({ email }: { email: string | undefined 
         e.dataTransfer.effectAllowed = 'move';
     };
     useEffect(() => {
+        setLoading(true)
         fetchTickets()
     }, [count])
     return (
         <div className="drag-and-drop" onDragOver={handleDragOver} onDrop={handleDrop}>
             <h1>In Progress</h1>
-            <Suspense fallback={<Loader/>}>
-                {inProgressTickets.length > 0 &&
-                    inProgressTickets.map((ticket: TicketType) => (
-                        <TicketCard email={email} key={ticket.ticketId} ticket={ticket} handleDragStart={handleDragStart} />
-                    ))
-                }
-            </Suspense>
+            {loading && <Loader />}
+            {inProgressTickets.length > 0 &&
+                inProgressTickets.map((ticket: TicketType) => (
+                    <TicketCard email={email} key={ticket.ticketId} ticket={ticket} handleDragStart={handleDragStart} />
+                ))
+            }
         </div>
     );
 };

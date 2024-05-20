@@ -14,12 +14,15 @@ export type TicketType = {
 
 export default function ToDOColumn({ email }: { email: string | undefined | null }) {
     const [todoTickets, setTodoTickets] = useState([]);
+    const [loading, setLoading] = useState(false);
+
     const count = useSelector((state: RootState) => state.ticket.count)
     const fetchTickets = async () => {
         const response = await fetch(`/api/tickets?email=${email}`);
         const data = await response.json();
         if (data.todo !== undefined)
             setTodoTickets(data?.todo);
+        setLoading(false)
     }
     const updateTicket = async (itemId: string) => {
         const response = await fetch(`/api/tickets`, {
@@ -47,18 +50,18 @@ export default function ToDOColumn({ email }: { email: string | undefined | null
         }
     };
     useEffect(() => {
+        setLoading(true)
         fetchTickets()
     }, [count])
     return (
         <div className="drag-and-drop" onDragOver={handleDragOver} onDrop={handleDrop}>
             <h1>Todos</h1>
-            <Suspense fallback={<Loader />}>
-                {todoTickets.length > 0 &&
-                    todoTickets.map((ticket: TicketType) => (
-                        <TicketCard email={email} key={ticket.ticketId} ticket={ticket} handleDragStart={handleDragStart} />
-                    ))
-                }
-            </Suspense>
+            {loading && <Loader />}
+            {todoTickets.length > 0 &&
+                todoTickets.map((ticket: TicketType) => (
+                    <TicketCard email={email} key={ticket.ticketId} ticket={ticket} handleDragStart={handleDragStart} />
+                ))
+            }
         </div>
     );
 };

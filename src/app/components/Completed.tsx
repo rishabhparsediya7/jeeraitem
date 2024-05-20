@@ -9,6 +9,8 @@ import { Loader } from "./Loader";
 export default function Completed({ email }: { email: string | undefined | null }) {
     const count = useSelector((state: RootState) => state.ticket.count)
     const [completedTickets, setCompletedTickets] = useState([])
+    const [loading, setLoading] = useState(false);
+
     const dispatch = useDispatch();
     const updateTicket = async (itemId: string) => {
         const result = await fetch(`api/tickets/findById?email=${email}&ticketId=${itemId}`)
@@ -35,6 +37,7 @@ export default function Completed({ email }: { email: string | undefined | null 
         const data = await response.json();
         if (data.completed !== undefined)
             setCompletedTickets(data?.completed);
+        setLoading(false)
     }
     const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
         e.preventDefault();
@@ -50,18 +53,18 @@ export default function Completed({ email }: { email: string | undefined | null 
         }
     };
     useEffect(() => {
+        setLoading(true)
         fetchTickets()
     }, [count])
     return (
         <div className="drag-and-drop" onDragOver={handleDragOver} onDrop={handleDrop}>
             <h1>Completed</h1>
-            <Suspense fallback={<Loader />}>
-                {completedTickets.length > 0 &&
-                    completedTickets.map((ticket: TicketType) => (
-                        <TicketCard email={email} key={ticket.ticketId} ticket={ticket} />
-                    ))
-                }
-            </Suspense>
+            {loading && <Loader />}                
+            {completedTickets.length > 0 &&
+                completedTickets.map((ticket: TicketType) => (
+                    <TicketCard email={email} key={ticket.ticketId} ticket={ticket} />
+                ))
+            }
         </div>
     );
 };

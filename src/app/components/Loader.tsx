@@ -1,3 +1,3 @@
 export const Loader = () => {
-    return <div className="loader"></div>
+    return <div className="loader m-auto"></div>
 }
