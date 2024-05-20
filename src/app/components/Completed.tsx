@@ -1,10 +1,11 @@
 'use client'
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../GlobalRedux/store";
 import { TicketType } from "./ToDoColumn";
 import { addTicket } from "../GlobalRedux/feature/TicketSlice";
 import { TicketCard } from "./TicketCard";
+import { Loader } from "./Loader";
 export default function Completed({ email }: { email: string | undefined | null }) {
     const count = useSelector((state: RootState) => state.ticket.count)
     const [completedTickets, setCompletedTickets] = useState([])
@@ -54,11 +55,13 @@ export default function Completed({ email }: { email: string | undefined | null 
     return (
         <div className="drag-and-drop" onDragOver={handleDragOver} onDrop={handleDrop}>
             <h1>Completed</h1>
-            {completedTickets.length > 0 &&
-                completedTickets.map((ticket: TicketType) => (
-                    <TicketCard email={email} key={ticket.ticketId} ticket={ticket} />
-                ))
-            }
+            <Suspense fallback={<Loader />}>
+                {completedTickets.length > 0 &&
+                    completedTickets.map((ticket: TicketType) => (
+                        <TicketCard email={email} key={ticket.ticketId} ticket={ticket} />
+                    ))
+                }
+            </Suspense>
         </div>
     );
 };

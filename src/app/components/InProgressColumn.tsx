@@ -1,10 +1,11 @@
 'use client'
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { TicketType } from "./ToDoColumn";
 import { useDispatch, useSelector } from "react-redux";
 import { addTicket } from "../GlobalRedux/feature/TicketSlice";
 import { RootState } from "../GlobalRedux/store";
 import { TicketCard } from "./TicketCard";
+import { Loader } from "./Loader";
 
 export default function InProgressColumn({ email }: { email: string | undefined | null }) {
     const count = useSelector((state: RootState) => state.ticket.count)
@@ -58,11 +59,13 @@ export default function InProgressColumn({ email }: { email: string | undefined 
     return (
         <div className="drag-and-drop" onDragOver={handleDragOver} onDrop={handleDrop}>
             <h1>In Progress</h1>
-            {inProgressTickets.length > 0 &&
-                inProgressTickets.map((ticket: TicketType) => (
-                    <TicketCard email={email} key={ticket.ticketId} ticket={ticket} handleDragStart={handleDragStart} />
-                ))
-            }
+            <Suspense fallback={<Loader/>}>
+                {inProgressTickets.length > 0 &&
+                    inProgressTickets.map((ticket: TicketType) => (
+                        <TicketCard email={email} key={ticket.ticketId} ticket={ticket} handleDragStart={handleDragStart} />
+                    ))
+                }
+            </Suspense>
         </div>
     );
 };

@@ -1,8 +1,9 @@
 'use client'
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../GlobalRedux/store";
 import { TicketCard } from "./TicketCard";
+import { Loader } from "./Loader";
 
 export type TicketType = {
     ticketId: number
@@ -51,11 +52,13 @@ export default function ToDOColumn({ email }: { email: string | undefined | null
     return (
         <div className="drag-and-drop" onDragOver={handleDragOver} onDrop={handleDrop}>
             <h1>Todos</h1>
-            {todoTickets.length > 0 &&
-                todoTickets.map((ticket: TicketType) => (
-                    <TicketCard email={email} key={ticket.ticketId} ticket={ticket} handleDragStart={handleDragStart} />
-                ))
-            }
+            <Suspense fallback={<Loader />}>
+                {todoTickets.length > 0 &&
+                    todoTickets.map((ticket: TicketType) => (
+                        <TicketCard email={email} key={ticket.ticketId} ticket={ticket} handleDragStart={handleDragStart} />
+                    ))
+                }
+            </Suspense>
         </div>
     );
 };
