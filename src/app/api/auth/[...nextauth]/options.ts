@@ -3,6 +3,7 @@ import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { session } from "@/lib/session";
 import clientPromise from "@/lib/db";
+import { cookies } from "next/headers";
 export const options: NextAuthOptions = {
   session: {
     strategy: "jwt",
@@ -38,13 +39,11 @@ export const options: NextAuthOptions = {
           .collection("jeera")
           .findOne({ email: username });
         if (userExist) {
-          if (
-            userExist.password === password &&
-            userExist.email === username
-          ) {
+          if (userExist.password === password && userExist.email === username) {
             user.name = userExist?.name;
             user.email = userExist?.email;
             user.image = userExist?.image;
+            user.id = userExist.id;
             return user;
           } else {
             throw new Error("credentials not found");
@@ -63,19 +62,19 @@ export const options: NextAuthOptions = {
         const client = await clientPromise;
         const db = client.db("test");
         const userExist = await db.collection("jeera").find({ id: user.id });
-        if (userExist) {
+        if (!userExist) {
           const result = await db.collection("jeera").insertOne(user);
           if (result.acknowledged === true) {
             return true;
           } else throw new Error("Can't create a profile");
-        } else return false;
+        } else return true;
       }
       return true;
     },
     session,
     async jwt({ token, user, account, profile }) {
-      if (profile) {
-        console.log("token: ", token);
+      if (token) {
+        return token;
       }
       return token;
     },

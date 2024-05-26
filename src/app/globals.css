@@ -132,4 +132,21 @@ body {
       transform: rotate(0deg);
     }
   }
+  .no-scrollbar::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  .no-scrollbar::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
+    border-radius: 10px;
+  }
+
+  .no-scrollbar::-webkit-scrollbar-thumb {
+    background: gray;
+    border-radius: 10px;
+  }
+
+  .no-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #363636;
+  }
 }

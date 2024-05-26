@@ -1,25 +1,24 @@
 'use client'
-import React, { Suspense, useEffect, useState } from "react";
-import { TicketType } from "./ToDoColumn";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addTicket } from "../GlobalRedux/feature/TicketSlice";
-import { RootState } from "../GlobalRedux/store";
-import { TicketCard } from "./TicketCard";
-import { Loader } from "./Loader";
-import { usePathname } from "next/navigation";
+import { RootState } from "@/app/GlobalRedux/store";
+import { TicketCard } from "@/app/components/TicketCard";
+import { Loader } from "@/app/components/Loader";
+import { addTicket } from "@/app/GlobalRedux/feature/TicketSlice";
+import { TicketType } from "./TeamTodoColumn";
 
-export default function InProgressColumn({ email, teamId }: { email?: string | undefined | null, teamId?: string }) {
-    const pathname = usePathname()
+export default function InProgressColumn() {
+    const teamId = useSelector((state: RootState) => state.team.id)
     const count = useSelector((state: RootState) => state.ticket.count)
-    const [inProgressTickets, setInProgresstickets] = useState([])
+    const [inProgressTickets, setInProgresstickets] = useState<TicketType[]>([])
     const [loading, setLoading] = useState(false);
     const dispatch = useDispatch();
-    const updateTicket = async (itemId: string) => {
-        const result = await fetch(`api/tickets/findById?email=${email}&ticketId=${itemId}`)
+    const updateTicket = async (ticketId: string) => {
+        const result = await fetch(`api/tickets/team/findById?teamId=${teamId}&ticketId=${ticketId}`)
         const ticket = await result.json();
         const body = {
-            email: email,
-            ticketId: itemId,
+            teamId: teamId,
+            ticketId: ticketId,
             ticket: {
                 heading: ticket.heading,
                 content: ticket.content,
@@ -27,7 +26,7 @@ export default function InProgressColumn({ email, teamId }: { email?: string | u
                 ticketId: ticket.ticketId
             }
         }
-        await fetch(`/api/tickets`, {
+        await fetch(`/api/tickets/team`, {
             method: "PUT",
             body: JSON.stringify(body)
         })
@@ -36,15 +35,9 @@ export default function InProgressColumn({ email, teamId }: { email?: string | u
         const response = await fetch(`/api/tickets/team?teamId=${teamId}`);
         const data = await response.json();
         if (data.inprogress !== undefined) {
-            setInProgresstickets(data?.inprogress);
-        }
-        setLoading(false)
-    }
-    const fetchTickets = async () => {
-        const response = await fetch(`/api/tickets?email=${email}`);
-        const data = await response.json();
-        if (data.inprogress !== undefined) {
-            setInProgresstickets(data?.inprogress);
+            setInProgresstickets(data.inprogress);
+        } else {
+            setInProgresstickets([])
         }
         setLoading(false)
     }
@@ -54,11 +47,11 @@ export default function InProgressColumn({ email, teamId }: { email?: string | u
 
     const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
         e.preventDefault();
-        const itemId = e.dataTransfer.getData('text/plain');
-        const item = document.getElementById(itemId);
+        const ticketId = e.dataTransfer.getData('text/plain');
+        const item = document.getElementById(ticketId);
         if (item) {
             e.currentTarget.appendChild(item);
-            updateTicket(itemId)
+            updateTicket(ticketId)
             dispatch(addTicket())
         }
     };
@@ -68,20 +61,15 @@ export default function InProgressColumn({ email, teamId }: { email?: string | u
     };
     useEffect(() => {
         setLoading(true)
-        if (teamId !== undefined && pathname === '/team') {
-            fetchTeamTickets()
-        }
-        else {
-            fetchTickets()
-        }
-    }, [count])
+        fetchTeamTickets()
+    }, [count, teamId])
     return (
         <div className="drag-and-drop" onDragOver={handleDragOver} onDrop={handleDrop}>
             <h1>In Progress</h1>
             {loading && <Loader />}
             {inProgressTickets.length > 0 &&
                 inProgressTickets.map((ticket: TicketType) => (
-                    <TicketCard email={email} key={ticket.ticketId} ticket={ticket} handleDragStart={handleDragStart} />
+                    <TicketCard teamId={teamId} email={""} key={ticket.ticketId} ticket={ticket} handleDragStart={handleDragStart} />
                 ))
             }
         </div>

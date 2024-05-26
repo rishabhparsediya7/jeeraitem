@@ -8,7 +8,6 @@ export async function POST(req: NextRequest) {
   const result = await db
     .collection("jeera")
     .insertOne({ name, email, password });
-  console.log(result);
   return NextResponse.json(result);
 }
 

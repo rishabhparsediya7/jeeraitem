@@ -1,5 +1,5 @@
 'use client'
-import { Bell, Ham, HamIcon, LucideAlignJustify } from "lucide-react";
+import { Bell, LucideAlignJustify } from "lucide-react";
 import { signOut } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -17,7 +17,7 @@ export default function Navbar({ name, image }: { name: string | undefined | nul
                 <div className="hidden sm:flex items-center">
                     <ul className="flex items-center space-x-2">
                         <Link href="/" className="hover:bg-[#f14e6b] tracking-wide hover:text-white rounded-md p-2">Home</Link>
-                        <Link href="/" className="hover:bg-[#f14e6b] tracking-wide hover:text-white rounded-md p-2">Profile</Link>
+                        <Link href="/team" className="hover:bg-[#f14e6b] tracking-wide hover:text-white rounded-md p-2">Team</Link>
                         {name && <button onClick={() => signOut()} className="hover:bg-[#f14e6b] tracking-wide hover:text-white rounded-md p-2">Signout</button>}
                         <Link href="/" className="hover:bg-[#f14e6b] tracking-wide hover:text-white rounded-md p-2">
                             <Bell />
@@ -35,13 +35,13 @@ export default function Navbar({ name, image }: { name: string | undefined | nul
             {showNav && <div className="flex w-full bg-white shadow-lg sm:hidden items-center p-4">
                 <ul className="flex flex-col items-center space-x-2 justify-start text-left">
                     <Link href="/home" className="w-full hover:bg-[#f14e6b] tracking-wide hover:text-white rounded-md p-2">Home</Link>
-                    <Link href="/profile" className="w-full hover:bg-[#f14e6b] tracking-wide hover:text-white rounded-md p-2">Profile</Link>
-                    {name && <Link href="/api/auth/signout" className="w-full hover:bg-[#f14e6b] tracking-wide hover:text-white rounded-md p-2">Signout</Link>}
+                    <Link href="/team" className="w-full hover:bg-[#f14e6b] tracking-wide hover:text-white rounded-md p-2">Teams</Link>
+                    {name && <button onClick={() => signOut()} className="w-full hover:bg-[#f14e6b] tracking-wide hover:text-white rounded-md p-2">Signout</button>}
                     <Link href="/notification" className="hover:bg-[#f14e6b] w-full tracking-wide hover:text-white rounded-md p-2">
                         <Bell />
                     </Link>
                     <li className="p-2 flex items-center justify-start space-x-4">Hi, <span className="capitalize">{name?.toString().split(" ")[0]}</span>
-                        <img className="h-10 w-10 rounded-full" src={image ? image : `/user.jpg`} alt="default_user" height={500} width={500} />
+                        <Image className="h-10 w-10 rounded-full" src={image ? image : `/user.jpg`} alt="default_user" height={500} width={500} />
                     </li>
                 </ul>
             </div>}

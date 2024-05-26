@@ -6,11 +6,12 @@ import EditModal from "./EditModal"
 import { useState } from "react"
 import DeleteModal from "./DeleteModal"
 interface TicketCardProps {
-    email: string | undefined | null
+    email?: string | undefined | null
     ticket: TicketType,
     handleDragStart?: React.DragEventHandler<HTMLDivElement>
+    teamId?: string
 }
-export const TicketCard = ({ ticket, handleDragStart, email }: TicketCardProps) => {
+export const TicketCard = ({ ticket, handleDragStart, email, teamId }: TicketCardProps) => {
     const [showModal, setShowModal] = useState<boolean>(false);
     const toggleModal = () => {
         setShowModal(!showModal)
@@ -24,7 +25,7 @@ export const TicketCard = ({ ticket, handleDragStart, email }: TicketCardProps) 
     return (
         <div className="draggable-item shadow-lg flex flex-col space-y-2" id={ticket.ticketId.toString()} draggable onDragStart={handleDragStart}>
             {showModal && <EditModal email={email} toggleModal={toggleModal} ticket={ticket} />}
-            {showDeleteModal && <DeleteModal email={email} toggleModal={toggleDeleteModal} ticketId={ticket.ticketId} />}
+            {showDeleteModal && <DeleteModal teamId={teamId} email={email} toggleModal={toggleDeleteModal} ticketId={ticket.ticketId} />}
             <div className="w-full flex justify-between">
                 <div
                     className="bg-pink-200 flex justify-center items-center text-red-500 rounded-3xl px-3 py-0.5 w-fit font-bold tracking-wide">

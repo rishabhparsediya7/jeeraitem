@@ -7,29 +7,27 @@ type bodyProps = {
     heading: string;
     content: string;
     tag: string;
-    email?: string | undefined | null;
     userId?: string;
     teamId?: string;
 }
-export default function Modal({ toggleModal, email }: { toggleModal: () => void, email: string | undefined | null, teamId?: string, userId?: string }) {
+export default function TeamTicketModal({ toggleModal, teamId, userId }: { toggleModal: () => void, teamId?: string, userId?: string }) {
     const [heading, setHeading] = useState<string>('');
     const [content, setContent] = useState<string>('');
     const dispatch = useDispatch();
     const save = async (body: bodyProps) => {
-        const response = await fetch('/api/tickets', {
+        const response = await fetch('/api/tickets/team', {
             method: 'POST',
             body: JSON.stringify(body)
         })
-        const data = await response.json();
-        if (data) {
+        const { success } = await response.json();
+        if (success) {
             dispatch(addTicket())
         }
     }
     const saveTicket = () => {
         const body = {
-            heading: heading, content: content, tag: 'todo', email: email
+            heading: heading, content: content, tag: 'todo', teamId: teamId, userId: userId
         }
-
         save(body);
         toggleModal();
     }

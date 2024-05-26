@@ -20,7 +20,6 @@ export default function EditModal({ toggleModal, email, ticket }: { toggleModal:
             body: JSON.stringify(body)
         })
         const data = await response.json();
-        console.log(data)
         if (data) {
             dispatch(addTicket())
         }

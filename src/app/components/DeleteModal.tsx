@@ -1,32 +1,41 @@
 'use client'
-import { removeTicket } from "@/app/GlobalRedux/feature/TicketSlice";
-import { redirect } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useDispatch } from "react-redux";
 
 type bodyProps = {
-    ticketId: number,
-    email: string | undefined | null
+    ticketId: number
+    teamId?: string
+    email?: string | undefined | null
 }
-export default function DeleteModal({ toggleModal, email, ticketId }: { toggleModal: () => void, email: string | undefined | null, ticketId: number }) {
-    const dispatch = useDispatch();
-    const deleteT = async (body: bodyProps) => {
-        const response = await fetch('/api/tickets', {
+export default function DeleteModal({ toggleModal, email, ticketId, teamId }: { toggleModal: () => void, email: string | undefined | null, ticketId: number, teamId?: string }) {
+    const pathname = usePathname();
+    const deleteT = async (body: bodyProps, url: string) => {
+        const response = await fetch(url, {
             method: 'DELETE',
             body: JSON.stringify(body)
         })
         const data = await response.json();
-        console.log(data)
         if (data) {
-            console.log('deleting...')
             window.location.reload()
         }
     }
     const deleteTicket = async () => {
-        const body = {
-            email: email,
-            ticketId: ticketId
+        let body, url: string;
+        if (pathname === '/team') {
+            body = {
+                teamId: teamId,
+                ticketId: ticketId
+            }
+            url = '/api/tickets/team'
         }
-        deleteT(body);
+        else {
+            body = {
+                email: email,
+                ticketId: ticketId
+            }
+            url = '/api/tickets'
+        }
+        deleteT(body, url);
         toggleModal();
     }
     return (
